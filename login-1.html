@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Authentication</title>
+</head>
+
+<body>
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+        <label for="signupUsername">Username:</label>
+        <input type="text" id="signupUsername" required>
+
+        <label for="signupPassword">Password:</label>
+        <input type="password" id="signupPassword" required>
+
+        <button type="button" onclick="signup()">Sign Up</button>
+    </form>
+
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername" required>
+
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" required>
+
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <script>
+        function signup() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+
+            // Check if the user already exists
+            if (localStorage.getItem(username)) {
+                alert('User already exists');
+            } else {
+                // Store the user credentials in local storage
+                localStorage.setItem(username, password);
+                alert('Sign up successful');
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Check if the user exists and the password is correct
+            const storedPassword = localStorage.getItem(username);
+
+            if (storedPassword === null) {
+                alert('User not found');
+            } else if (password === storedPassword) {
+                alert('Login successful');
+                // Redirect to the dashboard page with the username as a parameter
+                window.location.href = './dashboard.html?username=' + encodeURIComponent(username);
+            } else {
+                alert('Incorrect password');
+            }
+        }
+    </script>
+    
+
+</body>
+
+</html>
